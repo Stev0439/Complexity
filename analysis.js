@@ -81,11 +81,20 @@ function FileBuilder()
 
 // A function following the Visitor pattern.
 // Annotates nodes with parent objects.
-
+// helper function for number of strings in a filePath
+function stringsInFile(ast,i){
+	traverseWithParents(ast, function (node)
+	{
+		if (node.type === 'Literal')
+		{
+			i++;
+		}
+	});
+	return i;
+}
 function traverseWithParents(object, visitor)
 {
     var key, child;
-
     visitor.call(null, object);
 
     for (key in object) {
@@ -94,7 +103,7 @@ function traverseWithParents(object, visitor)
             if (typeof child === 'object' && child !== null && key != 'parent')
             {
             	child.parent = object;
-					traverseWithParents(child, visitor);
+							traverseWithParents(child, visitor);
             }
         }
     }
@@ -111,6 +120,7 @@ function complexity(filePath)
 	var fileBuilder = new FileBuilder();
 	fileBuilder.FileName = filePath;
 	fileBuilder.ImportCount = 0;
+	fileBuilder.Strings = stringsInFile(ast,i);
 	builders[filePath] = fileBuilder;
 
 	// Tranverse program with a function visitor.
