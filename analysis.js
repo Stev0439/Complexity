@@ -135,12 +135,42 @@ function complexity(filePath)
 			builder.StartLine    = node.loc.start.line;
 			builder.ParameterCount = functionParamters( node );
 			builder.SimpleCyclomaticComplexity += simpleCC(node);
+			builder.MaxConditions = maxC(node);
 			builders[builder.FunctionName] = builder;
 		}
 
 
 	});
 
+}
+function maxC(ast){
+	var ops = [0];
+	traverseWithParents(ast, function (node)
+	{
+		if (node.type === "IfStatement"){
+			ops.push(maxCif(node));
+		}
+});
+var max = 0;
+for (var i in ops){
+		if(ops[i] > max){
+			max = ops[i];
+		}
+}
+if(max > 0){
+	return max+1;
+}
+return max;
+}
+function maxCif(ast){
+	var count = 0;
+	traverseWithParents(ast, function (node)
+	{
+		if ((node.type === "LogicalExpression") && ((node.operator === "&&") || (node.operator === "||"))){
+			count +=1;
+		}
+});
+return count;
 }
 function simpleCC(ast){
 	var count = 0;
