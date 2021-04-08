@@ -11,7 +11,7 @@ function main()
 		args = ["analysis.js"];
 	}
 	var filePath = args[0];
-	
+
 	complexity(filePath);
 
 	// Report
@@ -81,6 +81,7 @@ function FileBuilder()
 
 // A function following the Visitor pattern.
 // Annotates nodes with parent objects.
+
 function traverseWithParents(object, visitor)
 {
     var key, child;
@@ -90,7 +91,7 @@ function traverseWithParents(object, visitor)
     for (key in object) {
         if (object.hasOwnProperty(key)) {
             child = object[key];
-            if (typeof child === 'object' && child !== null && key != 'parent') 
+            if (typeof child === 'object' && child !== null && key != 'parent')
             {
             	child.parent = object;
 					traverseWithParents(child, visitor);
@@ -113,15 +114,15 @@ function complexity(filePath)
 	builders[filePath] = fileBuilder;
 
 	// Tranverse program with a function visitor.
-	traverseWithParents(ast, function (node) 
+	traverseWithParents(ast, function (node)
 	{
-		if (node.type === 'FunctionDeclaration') 
+		if (node.type === 'FunctionDeclaration')
 		{
 			var builder = new FunctionBuilder();
 
 			builder.FunctionName = functionName(node);
 			builder.StartLine    = node.loc.start.line;
-
+			builder.ParameterCount = functionParamters( node );
 			builders[builder.FunctionName] = builder;
 		}
 
@@ -134,17 +135,17 @@ function childrenLength(node)
 {
 	var key, child;
 	var count = 0;
-	for (key in node) 
+	for (key in node)
 	{
-		if (node.hasOwnProperty(key)) 
+		if (node.hasOwnProperty(key))
 		{
 			child = node[key];
-			if (typeof child === 'object' && child !== null && key != 'parent') 
+			if (typeof child === 'object' && child !== null && key != 'parent')
 			{
 				count++;
 			}
 		}
-	}	
+	}
 	return count;
 }
 
@@ -170,11 +171,17 @@ function functionName( node )
 	return "anon function @" + node.loc.start.line;
 }
 
+// helper function for function Parameters
+function functionParamters( node )
+{
+		return node.params.length;
+
+}
 // Helper function for allowing parameterized formatting of strings.
 if (!String.prototype.format) {
   String.prototype.format = function() {
     var args = arguments;
-    return this.replace(/{(\d+)}/g, function(match, number) { 
+    return this.replace(/{(\d+)}/g, function(match, number) {
       return typeof args[number] != 'undefined'
         ? args[number]
         : match
@@ -185,7 +192,7 @@ if (!String.prototype.format) {
 
 main();
 
-function Crazy (argument) 
+function Crazy (argument)
 {
 
 	var date_bits = element.value.match(/^(\d{4})\-(\d{1,2})\-(\d{1,2})$/);
