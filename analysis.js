@@ -143,6 +143,9 @@ function complexity(filePath)
 	});
 
 }
+function getStrings(){
+		return builders["analysis.js"].Strings;
+}
 function maxC(ast){
 	var ops = [0];
 	traverseWithParents(ast, function (node)
@@ -335,4 +338,5 @@ remainder.toString() + " seconds";
 mints.toString().split(".")[0] + " " + szmin;
       }
   }
+ exports.getStrings = getStrings;
  exports.complexity = complexity;

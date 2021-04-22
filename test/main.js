@@ -10,3 +10,10 @@ describe("Sanity check", function() {
     });
   });
 });
+describe("Strings", function(){
+  it("Strings in analysis.js is 191", function(){
+    main.complexity("analysis.js")
+    let stringCount = main.getStrings();
+    assert.equal(191,stringCount);
+  });
+});
