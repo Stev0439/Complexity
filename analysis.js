@@ -121,11 +121,16 @@ function complexity(filePath)
 
 			builder.FunctionName = functionName(node);
 			builder.StartLine    = node.loc.start.line;
-
+			builder.ParameterCount = functionParamters( node );
 			builders[builder.FunctionName] = builder;
 		}
 
 	});
+
+}
+function functionParamters( node )
+{
+		return node.params.length;
 
 }
 
