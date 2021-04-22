@@ -1,6 +1,7 @@
 
 (https://travis-ci.com/github/Stev0439/Complexity/jobs/497164262)
-![image](https://user-images.githubusercontent.com/62709228/114090715-c8b04680-9885-11eb-9fc3-0d56c12a02cc.png)
+![image](https://user-images.githubusercontent.com/62709228/115757845-86e6cc00-a36c-11eb-8499-df5b1dcf220e.png)
+![image](https://user-images.githubusercontent.com/62709228/115757568-77678300-a36c-11eb-87ee-1190ccc72705.png)
 
 
 
